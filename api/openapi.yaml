@@ -4,8 +4,6 @@ info:
   description: ""
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/SATISHSARAGADAM_1/mayamaya_web_app/1.0.0
-  description: SwaggerHub API Auto Mocking
 - url: https://api.mayamaya.us
   description: MayaMaya Web App Node API's
 - url: https://data.mongodb-api.com/app/mayamaya-app-production-uqomm/endpoint/mayamaya
