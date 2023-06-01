@@ -1,0 +1,728 @@
+openapi: 3.0.0
+info:
+  title: MayaMaya
+  description: ""
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/SATISHSARAGADAM_1/mayamaya_web_app/1.0.0
+  description: SwaggerHub API Auto Mocking
+- url: https://api.mayamaya.us
+  description: MayaMaya Web App Node API's
+- url: https://data.mongodb-api.com/app/mayamaya-app-production-uqomm/endpoint/mayamaya
+  description: MayaMaya Web App Realm API's
+paths:
+  /addUser:
+    post:
+      summary: Add a new user
+      operationId: addUserPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/addUser_body'
+        required: true
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+      servers:
+      - url: https://data.mongodb-api.com/app/mayamaya-app-production-uqomm/endpoint/mayamaya
+      x-swagger-router-controller: Default
+  /update_registration_status/{id}:
+    get:
+      summary: Update registration status
+      operationId: update_registration_statusIdGET
+      parameters:
+      - name: id
+        in: path
+        description: ID of the registration
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_1'
+      servers:
+      - url: https://api.mayamaya.us
+      x-swagger-router-controller: Default
+  /loginUser:
+    post:
+      summary: Login user
+      operationId: loginUserPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/loginUser_body'
+        required: true
+      responses:
+        "200":
+          description: Success response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200_2'
+      servers:
+      - url: https://data.mongodb-api.com/app/mayamaya-app-production-uqomm/endpoint/mayamaya
+      x-swagger-router-controller: Default
+  /loadUserProfile:
+    get:
+      summary: Load user profile
+      operationId: loadUserProfileGET
+      parameters:
+      - name: userId
+        in: query
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserDetailsResponse'
+      security:
+      - bearerAuth: []
+      servers:
+      - url: https://data.mongodb-api.com/app/mayamaya-app-production-uqomm/endpoint/mayamaya
+      x-swagger-router-controller: Default
+components:
+  schemas:
+    UserDetailsResponse:
+      type: object
+      properties:
+        lastResult:
+          $ref: '#/components/schemas/UserDetailsResponse_lastResult'
+        countOfResults:
+          type: string
+        numberOfCompletedSprints:
+          type: string
+        status:
+          type: string
+        userDetails:
+          $ref: '#/components/schemas/UserDetails'
+      example:
+        lastResult:
+          resultDateTime: 2000-01-23T04:56:07.000+00:00
+          _id: _id
+        numberOfCompletedSprints: numberOfCompletedSprints
+        countOfResults: countOfResults
+        userDetails:
+          profileDetails:
+            country: country
+            userPhoto: http://example.com/aeiou
+            ethnicity: ethnicity
+            gender: gender
+            language: language
+            accountId: accountId
+            orgCode:
+            - code: code
+              isPrimary: isPrimary
+              organization: organization
+            - code: code
+              isPrimary: isPrimary
+              organization: organization
+            profileId: profileId
+            specialConsiderations:
+            - specialConsiderations
+            - specialConsiderations
+            name: name
+            designation: designation
+            userType: userType
+            region: region
+            department: department
+            email: ""
+            age: age
+          accountDetails:
+            deviceType: deviceType
+            accountId: accountId
+            visits: visits
+            loginTime: 2000-01-23T04:56:07.000+00:00
+            role: role
+            subscribedPlanType: subscribedPlanType
+            userBadgeType: userBadgeType
+            userId: userId
+            deviceId: deviceId
+            miramiraCoins: miramiraCoins
+        status: status
+    UserDetails:
+      type: object
+      properties:
+        accountDetails:
+          $ref: '#/components/schemas/AccountDetails'
+        profileDetails:
+          $ref: '#/components/schemas/ProfileDetails'
+      example:
+        profileDetails:
+          country: country
+          userPhoto: http://example.com/aeiou
+          ethnicity: ethnicity
+          gender: gender
+          language: language
+          accountId: accountId
+          orgCode:
+          - code: code
+            isPrimary: isPrimary
+            organization: organization
+          - code: code
+            isPrimary: isPrimary
+            organization: organization
+          profileId: profileId
+          specialConsiderations:
+          - specialConsiderations
+          - specialConsiderations
+          name: name
+          designation: designation
+          userType: userType
+          region: region
+          department: department
+          email: ""
+          age: age
+        accountDetails:
+          deviceType: deviceType
+          accountId: accountId
+          visits: visits
+          loginTime: 2000-01-23T04:56:07.000+00:00
+          role: role
+          subscribedPlanType: subscribedPlanType
+          userBadgeType: userBadgeType
+          userId: userId
+          deviceId: deviceId
+          miramiraCoins: miramiraCoins
+    AccountDetails:
+      type: object
+      properties:
+        accountId:
+          type: string
+        userId:
+          type: string
+        deviceType:
+          type: string
+        deviceId:
+          type: string
+        loginTime:
+          type: string
+          format: date-time
+        role:
+          type: string
+        visits:
+          type: string
+        miramiraCoins:
+          type: string
+        userBadgeType:
+          type: string
+        subscribedPlanType:
+          type: string
+      example:
+        deviceType: deviceType
+        accountId: accountId
+        visits: visits
+        loginTime: 2000-01-23T04:56:07.000+00:00
+        role: role
+        subscribedPlanType: subscribedPlanType
+        userBadgeType: userBadgeType
+        userId: userId
+        deviceId: deviceId
+        miramiraCoins: miramiraCoins
+    ProfileDetails:
+      type: object
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+          format: email
+        country:
+          type: string
+        region:
+          type: string
+        ethnicity:
+          type: string
+        age:
+          type: string
+        gender:
+          type: string
+        specialConsiderations:
+          type: array
+          items:
+            type: string
+        userPhoto:
+          type: string
+          format: uri
+        orgCode:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationCode'
+        department:
+          type: string
+        designation:
+          type: string
+        accountId:
+          type: string
+        language:
+          type: string
+        userType:
+          type: string
+        profileId:
+          type: string
+      example:
+        country: country
+        userPhoto: http://example.com/aeiou
+        ethnicity: ethnicity
+        gender: gender
+        language: language
+        accountId: accountId
+        orgCode:
+        - code: code
+          isPrimary: isPrimary
+          organization: organization
+        - code: code
+          isPrimary: isPrimary
+          organization: organization
+        profileId: profileId
+        specialConsiderations:
+        - specialConsiderations
+        - specialConsiderations
+        name: name
+        designation: designation
+        userType: userType
+        region: region
+        department: department
+        email: ""
+        age: age
+    OrganizationCode:
+      type: object
+      properties:
+        organization:
+          type: string
+        code:
+          type: string
+        isPrimary:
+          type: string
+      example:
+        code: code
+        isPrimary: isPrimary
+        organization: organization
+    addUser_body:
+      type: object
+      properties:
+        deviceId:
+          type: string
+          example: DEVICEID123456789
+        deviceType:
+          type: string
+          example: ANDROID
+        authType:
+          type: string
+          example: INTERNAL
+        userId:
+          type: string
+          example: pampanasaranya@gmail.com
+        email:
+          type: string
+          example: pampanasaranya@gmail.com
+        password:
+          type: string
+          example: "1234567890"
+        name:
+          type: string
+          example: Saranya
+        role:
+          type: string
+          example: Professional
+    inline_response_200:
+      type: object
+      properties:
+        status:
+          type: string
+          example: SUCCESS
+        jwtToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9......
+        userDetails:
+          $ref: '#/components/schemas/inline_response_200_userDetails'
+        message:
+          type: string
+          example: User Id pampanasaranyaaa@gmail.com successfully added and sent
+            verification link
+      example:
+        jwtToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9......
+        message: User Id pampanasaranyaaa@gmail.com successfully added and sent verification
+          link
+        userDetails:
+          profileDetails:
+            country: ""
+            userPhoto: userPhoto
+            ethnicity: ""
+            gender: ""
+            language: English
+            userId: pampanasaranyaaa@gmail.com
+            accountId: 64783663a57001858ab7ec73
+            orgCode:
+            - code: "-1000"
+              isPrimary: "yes"
+              organization: MayaMaya
+            - code: "-1000"
+              isPrimary: "yes"
+              organization: MayaMaya
+            profileId: 64783663a57001858ab7ec9f
+            specialConsiderations: []
+            name: Saranya
+            userType: Individual User
+            designation: ""
+            region: ""
+            department: ""
+            email: pampanasaranyaaa@gmail.com
+            age: ""
+          accountDetails:
+            deviceType: ANDROID
+            registrationStatus: verified
+            role: Professional
+            coins: ""
+            completedQuizCount: ""
+            userBadgeType: Beginner
+            userId: pampanasaranyaaa@gmail.com
+            deviceId: DEVICEID123456789
+            token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.....
+            accountId: 64783663a57001858ab7ec73
+            subscribedPlanType: Enterprise
+            authType: INTERNAL
+            completedSprintCount: ""
+            completedQuestionCount: ""
+        status: SUCCESS
+    inline_response_200_1:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          example: 200
+        status:
+          type: string
+          example: SUCCESS
+        message:
+          type: string
+          example: verified successfully
+      example:
+        message: verified successfully
+        statusCode: 200
+        status: SUCCESS
+    loginUser_body:
+      type: object
+      properties:
+        outhType:
+          type: string
+          example: GOOGLE
+        userId:
+          type: string
+          example: raviteja.karri@chromiumsolutions.com
+    inline_response_200_2:
+      type: object
+      properties:
+        numberOfCompletedSprints:
+          type: string
+          example: "9"
+        status:
+          type: string
+          example: SUCCESS
+        userDetails:
+          $ref: '#/components/schemas/inline_response_200_2_userDetails'
+        jwtToken:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ......
+      example:
+        numberOfCompletedSprints: "9"
+        jwtToken: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ......
+        userDetails:
+          deviceType: Android
+          accountId: 628658d75d64dacdb7bb60a9
+          registrationStatus: verified
+          role: Professional
+          coins: "306"
+          subscribedPlanType: Enterprise Plan
+          outhType: GOOGLE
+          userBadgeType: Collaborator
+          userId: raviteja.karri@chromiumsolutions.com
+          deviceId: deviceId
+          completedSprintCount: "9"
+        status: SUCCESS
+    UserDetailsResponse_lastResult:
+      required:
+      - _id
+      - resultDateTime
+      type: object
+      properties:
+        _id:
+          type: string
+        resultDateTime:
+          type: string
+          format: date-time
+      example:
+        resultDateTime: 2000-01-23T04:56:07.000+00:00
+        _id: _id
+    inline_response_200_userDetails_accountDetails:
+      type: object
+      properties:
+        registrationStatus:
+          type: string
+          example: verified
+        userId:
+          type: string
+          example: pampanasaranyaaa@gmail.com
+        deviceType:
+          type: string
+          example: ANDROID
+        authType:
+          type: string
+          example: INTERNAL
+        deviceId:
+          type: string
+          example: DEVICEID123456789
+        role:
+          type: string
+          example: Professional
+        coins:
+          type: string
+          example: ""
+        subscribedPlanType:
+          type: string
+          example: Enterprise
+        userBadgeType:
+          type: string
+          example: Beginner
+        completedSprintCount:
+          type: string
+          example: ""
+        completedQuizCount:
+          type: string
+          example: ""
+        completedQuestionCount:
+          type: string
+          example: ""
+        token:
+          type: string
+          example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.....
+        accountId:
+          type: string
+          example: 64783663a57001858ab7ec73
+      example:
+        deviceType: ANDROID
+        registrationStatus: verified
+        role: Professional
+        coins: ""
+        completedQuizCount: ""
+        userBadgeType: Beginner
+        userId: pampanasaranyaaa@gmail.com
+        deviceId: DEVICEID123456789
+        token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.....
+        accountId: 64783663a57001858ab7ec73
+        subscribedPlanType: Enterprise
+        authType: INTERNAL
+        completedSprintCount: ""
+        completedQuestionCount: ""
+    inline_response_200_userDetails_profileDetails_orgCode:
+      type: object
+      properties:
+        organization:
+          type: string
+          example: MayaMaya
+        code:
+          type: string
+          example: "-1000"
+        isPrimary:
+          type: string
+          example: "yes"
+      example:
+        code: "-1000"
+        isPrimary: "yes"
+        organization: MayaMaya
+    inline_response_200_userDetails_profileDetails:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: pampanasaranyaaa@gmail.com
+        name:
+          type: string
+          example: Saranya
+        email:
+          type: string
+          example: pampanasaranyaaa@gmail.com
+        country:
+          type: string
+          example: ""
+        region:
+          type: string
+          example: ""
+        ethnicity:
+          type: string
+          example: ""
+        age:
+          type: string
+          example: ""
+        gender:
+          type: string
+          example: ""
+        language:
+          type: string
+          example: English
+        userType:
+          type: string
+          example: Individual User
+        specialConsiderations:
+          type: array
+          example: []
+          items:
+            type: string
+        userPhoto:
+          type: string
+        orgCode:
+          type: array
+          items:
+            $ref: '#/components/schemas/inline_response_200_userDetails_profileDetails_orgCode'
+        department:
+          type: string
+          example: ""
+        designation:
+          type: string
+          example: ""
+        accountId:
+          type: string
+          example: 64783663a57001858ab7ec73
+        profileId:
+          type: string
+          example: 64783663a57001858ab7ec9f
+      example:
+        country: ""
+        userPhoto: userPhoto
+        ethnicity: ""
+        gender: ""
+        language: English
+        userId: pampanasaranyaaa@gmail.com
+        accountId: 64783663a57001858ab7ec73
+        orgCode:
+        - code: "-1000"
+          isPrimary: "yes"
+          organization: MayaMaya
+        - code: "-1000"
+          isPrimary: "yes"
+          organization: MayaMaya
+        profileId: 64783663a57001858ab7ec9f
+        specialConsiderations: []
+        name: Saranya
+        userType: Individual User
+        designation: ""
+        region: ""
+        department: ""
+        email: pampanasaranyaaa@gmail.com
+        age: ""
+    inline_response_200_userDetails:
+      type: object
+      properties:
+        accountDetails:
+          $ref: '#/components/schemas/inline_response_200_userDetails_accountDetails'
+        profileDetails:
+          $ref: '#/components/schemas/inline_response_200_userDetails_profileDetails'
+      example:
+        profileDetails:
+          country: ""
+          userPhoto: userPhoto
+          ethnicity: ""
+          gender: ""
+          language: English
+          userId: pampanasaranyaaa@gmail.com
+          accountId: 64783663a57001858ab7ec73
+          orgCode:
+          - code: "-1000"
+            isPrimary: "yes"
+            organization: MayaMaya
+          - code: "-1000"
+            isPrimary: "yes"
+            organization: MayaMaya
+          profileId: 64783663a57001858ab7ec9f
+          specialConsiderations: []
+          name: Saranya
+          userType: Individual User
+          designation: ""
+          region: ""
+          department: ""
+          email: pampanasaranyaaa@gmail.com
+          age: ""
+        accountDetails:
+          deviceType: ANDROID
+          registrationStatus: verified
+          role: Professional
+          coins: ""
+          completedQuizCount: ""
+          userBadgeType: Beginner
+          userId: pampanasaranyaaa@gmail.com
+          deviceId: DEVICEID123456789
+          token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.....
+          accountId: 64783663a57001858ab7ec73
+          subscribedPlanType: Enterprise
+          authType: INTERNAL
+          completedSprintCount: ""
+          completedQuestionCount: ""
+    inline_response_200_2_userDetails:
+      type: object
+      properties:
+        registrationStatus:
+          type: string
+          example: verified
+        userId:
+          type: string
+          example: raviteja.karri@chromiumsolutions.com
+        deviceType:
+          type: string
+          example: Android
+        outhType:
+          type: string
+          example: GOOGLE
+        deviceId:
+          type: string
+        role:
+          type: string
+          example: Professional
+        coins:
+          type: string
+          example: "306"
+        subscribedPlanType:
+          type: string
+          example: Enterprise Plan
+        userBadgeType:
+          type: string
+          example: Collaborator
+        completedSprintCount:
+          type: string
+          example: "9"
+        accountId:
+          type: string
+          example: 628658d75d64dacdb7bb60a9
+      example:
+        deviceType: Android
+        accountId: 628658d75d64dacdb7bb60a9
+        registrationStatus: verified
+        role: Professional
+        coins: "306"
+        subscribedPlanType: Enterprise Plan
+        outhType: GOOGLE
+        userBadgeType: Collaborator
+        userId: raviteja.karri@chromiumsolutions.com
+        deviceId: deviceId
+        completedSprintCount: "9"
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
