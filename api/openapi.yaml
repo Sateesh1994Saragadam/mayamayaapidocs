@@ -8,9 +8,13 @@ servers:
   description: MayaMaya Web App Node API's
 - url: https://data.mongodb-api.com/app/mayamaya-app-production-uqomm/endpoint/mayamaya
   description: MayaMaya Web App Realm API's
+tags:
+- name: MayaMaya App
 paths:
   /addUser:
     post:
+      tags:
+      - MayaMaya App
       summary: Add a new user
       operationId: addUserPOST
       requestBody:
@@ -28,9 +32,11 @@ paths:
                 $ref: '#/components/schemas/inline_response_200'
       servers:
       - url: https://data.mongodb-api.com/app/mayamaya-app-production-uqomm/endpoint/mayamaya
-      x-swagger-router-controller: Default
+      x-swagger-router-controller: MayaMayaApp
   /update_registration_status/{id}:
     get:
+      tags:
+      - MayaMaya App
       summary: Update registration status
       operationId: update_registration_statusIdGET
       parameters:
@@ -51,9 +57,11 @@ paths:
                 $ref: '#/components/schemas/inline_response_200_1'
       servers:
       - url: https://api.mayamaya.us
-      x-swagger-router-controller: Default
+      x-swagger-router-controller: MayaMayaApp
   /loginUser:
     post:
+      tags:
+      - MayaMaya App
       summary: Login user
       operationId: loginUserPOST
       requestBody:
@@ -71,9 +79,11 @@ paths:
                 $ref: '#/components/schemas/inline_response_200_2'
       servers:
       - url: https://data.mongodb-api.com/app/mayamaya-app-production-uqomm/endpoint/mayamaya
-      x-swagger-router-controller: Default
+      x-swagger-router-controller: MayaMayaApp
   /loadUserProfile:
     get:
+      tags:
+      - MayaMaya App
       summary: Load user profile
       operationId: loadUserProfileGET
       parameters:
@@ -95,7 +105,245 @@ paths:
       - bearerAuth: []
       servers:
       - url: https://data.mongodb-api.com/app/mayamaya-app-production-uqomm/endpoint/mayamaya
-      x-swagger-router-controller: Default
+      x-swagger-router-controller: MayaMayaApp
+  /updateUserProfile:
+    post:
+      tags:
+      - MayaMaya App
+      summary: Update user profile
+      operationId: updateUserProfilePOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateUserProfileRequest'
+        required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateUserProfileResponse'
+      security:
+      - bearerAuth: []
+      servers:
+      - url: https://data.mongodb-api.com/app/mayamaya-app-production-uqomm/endpoint/mayamaya
+      x-swagger-router-controller: MayaMayaApp
+  /getUserSprints:
+    get:
+      tags:
+      - MayaMaya App
+      summary: Get user sprints
+      operationId: getUserSprintsGET
+      parameters:
+      - name: userId
+        in: query
+        description: User ID
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Sprint'
+                x-content-type: application/json
+      security:
+      - bearerAuth: []
+      servers:
+      - url: https://api.mayamaya.us
+      x-swagger-router-controller: MayaMayaApp
+  /getQuizsBySprintId:
+    post:
+      tags:
+      - MayaMaya App
+      summary: Get quizzes by sprint ID
+      operationId: getQuizsBySprintIdPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/getQuizsBySprintId_body'
+        required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Quiz'
+                x-content-type: application/json
+      security:
+      - bearerAuth: []
+      servers:
+      - url: https://api.mayamaya.us
+      x-swagger-router-controller: MayaMayaApp
+  /getQuestionsByQuizId:
+    post:
+      tags:
+      - MayaMaya App
+      summary: Get questions by quiz ID
+      operationId: getQuestionsByQuizIdPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/getQuestionsByQuizId_body'
+        required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Question'
+                x-content-type: application/json
+      security:
+      - bearerAuth: []
+      servers:
+      - url: https://api.mayamaya.us
+      x-swagger-router-controller: MayaMayaApp
+  /updateQuestion:
+    post:
+      tags:
+      - MayaMaya App
+      summary: Update a question
+      operationId: updateQuestionPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateQuestionRequest'
+        required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateQuestionResponse'
+      security:
+      - bearerAuth: []
+      servers:
+      - url: https://api.mayamaya.us
+      x-swagger-router-controller: MayaMayaApp
+  /getSprintResult:
+    post:
+      tags:
+      - MayaMaya App
+      summary: Get sprint results for a user
+      operationId: getSprintResultPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/getSprintResult_body'
+        required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  allOf:
+                  - $ref: '#/components/schemas/SprintResult'
+                x-content-type: application/json
+      security:
+      - bearerAuth: []
+      servers:
+      - url: https://data.mongodb-api.com/app/mayamaya-app-production-uqomm/endpoint/mayamaya
+      x-swagger-router-controller: MayaMayaApp
+  /getResultDetailsById:
+    get:
+      tags:
+      - MayaMaya App
+      summary: Get result details by ID
+      operationId: getResultDetailsByIdGET
+      parameters:
+      - name: resultId
+        in: query
+        description: The ID of the result
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetResultDetailsResponse'
+      security:
+      - bearerAuth: []
+      servers:
+      - url: https://data.mongodb-api.com/app/mayamaya-app-production-uqomm/endpoint/mayamaya
+      x-swagger-router-controller: MayaMayaApp
+  /users/get_skill_results_dates:
+    get:
+      tags:
+      - MayaMaya App
+      summary: Get skill results dates
+      operationId: usersGet_skill_results_datesGET
+      parameters:
+      - name: userId
+        in: query
+        description: The ID of the user
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetSkillResultsDatesResponse'
+      security:
+      - bearerAuth: []
+      servers:
+      - url: https://api.mayamaya.us
+      x-swagger-router-controller: MayaMayaApp
+  /users/update_skill_result_view:
+    post:
+      tags:
+      - MayaMaya App
+      summary: Update skill result view
+      operationId: usersUpdate_skill_result_viewPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UpdateSkillResultViewRequest'
+        required: true
+      responses:
+        "200":
+          description: Successful response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UpdateSkillResultViewResponse'
+      security:
+      - bearerAuth: []
+      servers:
+      - url: https://api.mayamaya.us
+      x-swagger-router-controller: MayaMayaApp
 components:
   schemas:
     UserDetailsResponse:
@@ -313,6 +561,428 @@ components:
         code: code
         isPrimary: isPrimary
         organization: organization
+    UpdateUserProfileRequest:
+      required:
+      - name
+      - profileId
+      type: object
+      properties:
+        profileId:
+          type: string
+        name:
+          type: string
+        age:
+          type: integer
+        language:
+          type: string
+        country:
+          type: string
+        department:
+          type: string
+        designation:
+          type: string
+        ethnicity:
+          type: string
+        specialConsiderations:
+          type: array
+          items:
+            type: string
+        orgCode:
+          type: array
+          items:
+            $ref: '#/components/schemas/OrganizationCode'
+    UpdateUserProfileResponse:
+      type: object
+      properties:
+        status:
+          type: string
+        message:
+          type: string
+      example:
+        message: message
+        status: status
+    Sprint:
+      type: object
+      properties:
+        sprintId:
+          type: string
+          description: The ID of the sprint
+        sprintName:
+          type: string
+          description: The name of the sprint
+        sprintStatus:
+          type: string
+          description: The status of the sprint
+        _id:
+          type: string
+          description: The unique identifier of the sprint
+      example:
+        sprintId: sprintId
+        sprintStatus: sprintStatus
+        sprintName: sprintName
+        _id: _id
+    Quiz:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The unique identifier of the quiz
+        quizId:
+          type: string
+          description: The ID of the quiz
+        quizNumber:
+          type: string
+          description: The number of the quiz
+        quizName:
+          type: string
+          description: The name of the quiz
+        totalQuestionCount:
+          type: string
+          description: The total number of questions in the quiz
+        completedQuestionCount:
+          type: string
+          description: The number of completed questions in the quiz
+        skippedQuestionCount:
+          type: string
+          description: The number of skipped questions in the quiz
+        _sprintId:
+          type: string
+          description: The ID of the sprint associated with the quiz
+      example:
+        totalQuestionCount: totalQuestionCount
+        quizId: quizId
+        quizName: quizName
+        skippedQuestionCount: skippedQuestionCount
+        _id: _id
+        quizNumber: quizNumber
+        _sprintId: _sprintId
+        completedQuestionCount: completedQuestionCount
+    Question:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The unique identifier of the question
+        questionId:
+          type: string
+          description: The ID of the question
+        questionNumber:
+          type: string
+          description: The number of the question
+        questionText:
+          type: string
+          description: The text of the question
+        questionContext:
+          type: string
+          description: The context of the question
+        questionOptions:
+          type: array
+          description: The options for the question
+          items:
+            $ref: '#/components/schemas/QuestionOption'
+        questionStatus:
+          type: string
+          description: The status of the question
+        category:
+          type: string
+          description: The category of the question
+        classification:
+          type: string
+          description: The classification of the question
+        _quizId:
+          type: string
+          description: The ID of the quiz associated with the question
+      example:
+        questionId: questionId
+        questionContext: questionContext
+        questionOptions:
+        - optionVal: optionVal
+          optionId: optionId
+          optionGrade: optionGrade
+          tags: {}
+        - optionVal: optionVal
+          optionId: optionId
+          optionGrade: optionGrade
+          tags: {}
+        _quizId: _quizId
+        _id: _id
+        category: category
+        classification: classification
+        questionStatus: questionStatus
+        questionText: questionText
+        questionNumber: questionNumber
+    QuestionOption:
+      type: object
+      properties:
+        optionId:
+          type: string
+          description: The ID of the option
+        optionVal:
+          type: string
+          description: The value of the option
+        optionGrade:
+          type: string
+          description: The grade of the option
+        tags:
+          type: object
+          description: The tags associated with the option
+      example:
+        optionVal: optionVal
+        optionId: optionId
+        optionGrade: optionGrade
+        tags: {}
+    UpdateQuestionRequest:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The ID of the question to update
+        _quizId:
+          type: string
+          description: The ID of the quiz associated with the question
+        _sprintId:
+          type: string
+          description: The ID of the sprint associated with the question
+        isLastQuestionOfQuiz:
+          type: boolean
+          description: Indicates if it is the last question of the quiz
+        isLastQuizOfSprint:
+          type: boolean
+          description: Indicates if it is the last quiz of the sprint
+        quizId:
+          type: string
+          description: The ID of the quiz
+        questionId:
+          type: string
+          description: The ID of the question
+        userId:
+          type: string
+          description: The ID of the user
+        questionStatus:
+          type: string
+          description: The status of the question
+        answerOptions:
+          type: array
+          description: The answer options for the question
+          items:
+            $ref: '#/components/schemas/AnswerOption'
+        numberOfMoves:
+          type: integer
+          description: The number of moves
+    AnswerOption:
+      type: object
+      properties:
+        optionId:
+          type: string
+          description: The ID of the option
+        optionVal:
+          type: string
+          description: The value of the option
+        tags:
+          type: object
+          description: The tags associated with the option
+    UpdateQuestionResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status of the update operation
+        message:
+          type: string
+          description: A message describing the result of the update operation
+      example:
+        message: message
+        status: status
+    SprintResult:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: The ID of the user
+        sprintId:
+          type: string
+          description: The ID of the sprint
+        spiritResult:
+          $ref: '#/components/schemas/QuadResult'
+        purposeResult:
+          $ref: '#/components/schemas/QuadResult'
+        rewardsResult:
+          $ref: '#/components/schemas/QuadResult'
+        professionResult:
+          $ref: '#/components/schemas/QuadResult'
+        resultHeadPara:
+          type: string
+          description: The summary of the quadrant results
+        _id:
+          type: string
+          description: The ID of the result
+        resultDateTime:
+          type: string
+          description: The date and time of the result
+        questionCount:
+          type: string
+          description: The number of questions in the sprint
+    QuadResult:
+      type: object
+      properties:
+        quadscore:
+          type: string
+          description: The score of the quadrant
+        quadDisplay:
+          type: string
+          description: The display name of the quadrant
+        blurb:
+          type: string
+          description: A description of the quadrant result
+      example:
+        quadscore: quadscore
+        blurb: blurb
+        quadDisplay: quadDisplay
+    GetResultDetailsResponse:
+      type: object
+      properties:
+        status:
+          type: string
+          description: The status of the response
+        resultDetails:
+          $ref: '#/components/schemas/ResultDetails'
+      example:
+        resultDetails:
+          professionResult: null
+          resultHeadPara: resultHeadPara
+          sprintId: sprintId
+          rewardsResult: null
+          resultDateTime: resultDateTime
+          spiritResult:
+            quadscore: quadscore
+            blurb: blurb
+            quadDisplay: quadDisplay
+          _id: _id
+          purposeResult: null
+          userId: userId
+        status: status
+    ResultDetails:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: The ID of the user
+        sprintId:
+          type: string
+          description: The ID of the sprint
+        spiritResult:
+          $ref: '#/components/schemas/QuadResult'
+        purposeResult:
+          $ref: '#/components/schemas/QuadResult'
+        rewardsResult:
+          $ref: '#/components/schemas/QuadResult'
+        professionResult:
+          $ref: '#/components/schemas/QuadResult'
+        resultHeadPara:
+          type: string
+          description: The summary of the quadrant results
+        _id:
+          type: string
+          description: The ID of the result
+        resultDateTime:
+          type: string
+          description: The date and time of the result
+      example:
+        professionResult: null
+        resultHeadPara: resultHeadPara
+        sprintId: sprintId
+        rewardsResult: null
+        resultDateTime: resultDateTime
+        spiritResult:
+          quadscore: quadscore
+          blurb: blurb
+          quadDisplay: quadDisplay
+        _id: _id
+        purposeResult: null
+        userId: userId
+    GetSkillResultsDatesResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: The status code of the response
+        status:
+          type: string
+          description: The status of the response
+        message:
+          type: string
+          description: The message associated with the response
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/SkillResultDate'
+      example:
+        result:
+        - resultDateTime: resultDateTime
+          isRead: true
+          _id: _id
+          isViewable: true
+        - resultDateTime: resultDateTime
+          isRead: true
+          _id: _id
+          isViewable: true
+        message: message
+        statusCode: 0
+        status: status
+    SkillResultDate:
+      type: object
+      properties:
+        isRead:
+          type: boolean
+          description: Indicates if the result is read
+        _id:
+          type: string
+          description: The ID of the result
+        resultDateTime:
+          type: string
+          description: The date and time of the result
+        isViewable:
+          type: boolean
+          description: Indicates if the result is viewable
+      example:
+        resultDateTime: resultDateTime
+        isRead: true
+        _id: _id
+        isViewable: true
+    UpdateSkillResultViewRequest:
+      required:
+      - ids
+      type: object
+      properties:
+        ids:
+          type: array
+          description: The IDs of the skill results to update their view status
+          items:
+            type: string
+    UpdateSkillResultViewResponse:
+      type: object
+      properties:
+        statusCode:
+          type: integer
+          description: The status code of the response
+        status:
+          type: string
+          description: The status of the response
+        message:
+          type: string
+          description: The message associated with the response
+        result:
+          $ref: '#/components/schemas/UpdateSkillResultViewResponse_result'
+      example:
+        result:
+          upsertedId: upsertedId
+          upsertedCount: 1
+          acknowledged: true
+          modifiedCount: 6
+          matchedCount: 5
+        message: message
+        statusCode: 0
+        status: status
     addUser_body:
       type: object
       properties:
@@ -455,6 +1125,24 @@ components:
           deviceId: deviceId
           completedSprintCount: "9"
         status: SUCCESS
+    getQuizsBySprintId_body:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The ID of the sprint
+    getQuestionsByQuizId_body:
+      type: object
+      properties:
+        _id:
+          type: string
+          description: The ID of the quiz
+    getSprintResult_body:
+      type: object
+      properties:
+        userId:
+          type: string
+          example: raviteja.karri@chromiumsolutions.com
     UserDetailsResponse_lastResult:
       required:
       - _id
@@ -469,6 +1157,31 @@ components:
       example:
         resultDateTime: 2000-01-23T04:56:07.000+00:00
         _id: _id
+    UpdateSkillResultViewResponse_result:
+      type: object
+      properties:
+        acknowledged:
+          type: boolean
+          description: Indicates if the operation was acknowledged
+        modifiedCount:
+          type: integer
+          description: The count of modified documents
+        upsertedId:
+          type: string
+          description: The ID of the upserted document (if any)
+          nullable: true
+        upsertedCount:
+          type: integer
+          description: The count of upserted documents
+        matchedCount:
+          type: integer
+          description: The count of matched documents
+      example:
+        upsertedId: upsertedId
+        upsertedCount: 1
+        acknowledged: true
+        modifiedCount: 6
+        matchedCount: 5
     inline_response_200_userDetails_accountDetails:
       type: object
       properties:
